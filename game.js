@@ -29,9 +29,13 @@ class Game {
   takeTurn(gridSpaceChosen) {
     // use event.target to identify the closest grid space clicked
     // gridSpaceChosen = that index #
-    // BUT only if index is currently null
-    this.gridSpaces.splice(gridSpaceChosen, 1, this.currentTurn.id);
-    console.log(`Space ${gridSpaceChosen} taken by player ${this.currentTurn.id}`)
+    if (!this.gridSpaces[gridSpaceChosen]) {
+      this.gridSpaces.splice(gridSpaceChosen, 1, this.currentTurn.id);
+      console.log(`Space ${gridSpaceChosen} taken by player ${this.currentTurn.id}`)
+      this.changeTurnPlayer();
+    } else {
+      console.log(`CHOOSE ANOTHER SPACE`)
+    }
 
     console.log(JSON.parse(JSON.stringify(this)));
   };
