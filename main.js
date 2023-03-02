@@ -39,3 +39,35 @@ newGame.checkWinConditions();
 newGame.takeTurn(3);
 newGame.changeTurnPlayer();
 newGame.checkWinConditions();
+
+// ^^^ ENDS IN A DRAW
+
+newGame.takeTurn(0);
+newGame.changeTurnPlayer();
+newGame.checkWinConditions();
+
+newGame.takeTurn(6);
+newGame.changeTurnPlayer();
+newGame.checkWinConditions();
+
+newGame.takeTurn(1);
+newGame.changeTurnPlayer();
+newGame.checkWinConditions();
+
+newGame.takeTurn(5);
+newGame.changeTurnPlayer();
+newGame.checkWinConditions();
+
+newGame.takeTurn(2);
+newGame.changeTurnPlayer();
+newGame.checkWinConditions();
+
+// ^^^ STARTING PLAYER WINS
+
+newGame.takeTurn(5);
+newGame.changeTurnPlayer();
+newGame.checkWinConditions();
+
+newGame.takeTurn(2);
+newGame.changeTurnPlayer();
+newGame.checkWinConditions();
