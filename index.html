@@ -6,22 +6,33 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- font-family: 'Open Sans', sans-serif; -->
     <link rel="stylesheet" href="styles.css">
     <title>Tic Tac Toe</title>
   </head>
   <body>
-    <section class="outside-columns">
-      <img src="" alt="Player 1 icon">
-      <h2></h2>
+    <section class="outside-column fire">
+      <div class="icon">🔥</div>
+      <!-- <div>&#x1F525;</div> -->
+      <h2>1 win</h2>
     </section>
     <section class="inner-column">
-      <h1></h1>
-      <!-- <section>Grid goes here</section> -->
+      <h1>placeholder</h1>
+      <section class="game-container">
+        <div id="space0">🔥</div>
+        <div id="space1"></div>
+        <div id="space2"></div>
+        <div id="space3"></div>
+        <div id="space4">❄️</div>
+        <div id="space5"></div>
+        <div id="space6"></div>
+        <div id="space7"></div>
+        <div id="space8"></div>
+      </section>
     </section>
-    <section class="outside-columns">
-      <img src="" alt="Player 2 icon">
-      <h2></h2>
+    <section class="outside-column ice">
+      <div class="icon">❄️</div>
+      <!-- <div>&#x2744;</div> -->
+      <h2>0 wins</h2>
     </section>
     <script type="text/javascript" src="game.js"></script>
     <script type="text/javascript" src="player.js"></script>
