@@ -7,18 +7,19 @@ class Game {
   };
 
   startNewGame() {
-    var player1 = new Player(1, '🔥');
-    var player2 = new Player(2, '❄️');
+    if (!this.players.length) {
+      var player1 = new Player(1, '🔥');
+      var player2 = new Player(2, '❄️');
+      this.players.push(player1);
+      this.players.push(player2);
+    };
 
     this.gridSpaces = [ , , , , , , , , ];
-    this.players = [];
-    this.players.push(player1);
-    this.players.push(player2);
 
-    if (!this.startingTurn || this.startingTurn.id === player2.id) {
-      this.startingTurn = player1;
-    } else if (this.startingTurn.id === player1.id) {
-      this.startingTurn = player2;
+    if (!this.startingTurn || this.startingTurn.id === this.players[1].id) {
+      this.startingTurn = this.players[0];
+    } else if (this.startingTurn.id === this.players[0].id) {
+      this.startingTurn = this.players[1];
     };
     
     this.currentTurn = this.startingTurn;
@@ -32,7 +33,7 @@ class Game {
     if (!this.gridSpaces[gridSpaceChosen]) {
       this.gridSpaces.splice(gridSpaceChosen, 1, this.currentTurn.id);
       console.log(`Space ${gridSpaceChosen} taken by player ${this.currentTurn.id}`)
-      this.changeTurnPlayer();
+      // this.changeTurnPlayer();
     } else {
       console.log(`CHOOSE ANOTHER SPACE`)
     }
