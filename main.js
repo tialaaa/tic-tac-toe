@@ -1,8 +1,6 @@
 var gameGrid = document.querySelector('#game-container');
 var gameBanner = document.querySelector('#game-banner')
-var player1Banner = document.querySelector('#player1');
-var player2Banner = document.querySelector('#player2');
-// var playerBanners = document.querySelectorAll('.player-banners');
+var playerBanners = document.querySelectorAll('.player-banners');
 var gridSpaces = document.querySelectorAll('.game-spaces');
 
 var newGame = new Game();
@@ -58,17 +56,13 @@ function updateGameBanner() {
 };
 
 function updatePlayerBanners() {
-  if (newGame.players[0].wins === 1) {
-    player1Banner.innerText = `${newGame.players[0].wins} win`
-  } else {
-    player1Banner.innerText = `${newGame.players[0].wins} wins`;
-  };
-
-  if (newGame.players[1].wins === 1) {
-    player2Banner.innerText = `${newGame.players[1].wins} win`
-  } else {
-    player2Banner.innerText = `${newGame.players[1].wins} wins`;
-  };
+  for (var i = 0; i < newGame.players.length; i++) {
+    if (newGame.players[i].wins === 1) {
+      playerBanners[i].innerText = `${newGame.players[i].wins} win`;
+    } else {
+      playerBanners[i].innerText = `${newGame.players[i].wins} wins`;
+    };
+  }
 };
 
 function clearGrid() {
