@@ -10,28 +10,27 @@ newGame.startNewGame();
 
 gameGrid.addEventListener('click', function() {
   event.preventDefault();
-  fillGridSpace();
+  findIndex();
 });
 
-function fillGridSpace() {
-  // console.log(newGame.gridSpaces)
+function findIndex() {
+  console.log(gridSpaces)
 
   for (var i = 0; i < gridSpaces.length; i++) {
-    if (gridSpaces[i].id === event.target.id) {
+    if (gridSpaces[i].id === event.target.id && !gridSpaces[i].innerText) {
       // ^^ Add check here for if data model grid space is null??
       // TO FIX: After choosing occupied space, it inserts the bad icon & switches players
       // but this.gridSpaces data model isn't impacted (which is correct)
-      console.log(`Grid space clicked: ${gridSpaces[i].id}`)
-      console.log(newGame.gridSpaces[gridSpaces[i].id.charAt(5)])
+      console.log(`DOM: Grid space clicked: ${gridSpaces[i].id}`)
+      console.log(gridSpaces[i].id.charAt(5))
       newGame.takeTurn(gridSpaces[i].id.charAt(5))
 
       gridSpaces[i].innerText = `${newGame.currentTurn.token}`;
       newGame.switchPlayer();
-    } else {
-      console.log(`TRY AGAIN`)
+      return;
     }
   };
-
+  // console.log(`TRY AGAIN`)
   newGame.checkWinConditions();
   // should updateGameDisplay go in here?
 };
