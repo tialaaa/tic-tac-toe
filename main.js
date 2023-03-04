@@ -2,93 +2,113 @@ var gameGrid = document.querySelector('#game-container');
 var gameDisplay = document.querySelector('h1')
 var player1Display = document.querySelector('#player1');
 var player2Display = document.querySelector('#player2');
+var gridSpaces = document.querySelectorAll('.game-spaces');
+
 var newGame = new Game();
 
 newGame.startNewGame();
 
 gameGrid.addEventListener('click', function() {
   event.preventDefault();
-  identifyGridSpace
+  fillGridSpace();
 });
 
-function identifyGridSpace() {
-  // var gridSpaceChosen = 
-  // use event.targetClosest? to identify which id was clicked
-  
-  newGame.takeTurn(gridSpaceChosen);
-  updateGameDisplay;
-  updatePlayerDisplay;
-  newGame.changeTurnPlayer();
+function fillGridSpace() {
+  // console.log(newGame.gridSpaces)
+
+  for (var i = 0; i < gridSpaces.length; i++) {
+    if (gridSpaces[i].id === event.target.id) {
+      // ^^ Add check here for if data model grid space is null??
+      // TO FIX: After choosing occupied space, it inserts the bad icon & switches players
+      // but this.gridSpaces data model isn't impacted (which is correct)
+      console.log(`Grid space clicked: ${gridSpaces[i].id}`)
+      console.log(newGame.gridSpaces[gridSpaces[i].id.charAt(5)])
+      newGame.takeTurn(gridSpaces[i].id.charAt(5))
+
+      gridSpaces[i].innerText = `${newGame.currentTurn.token}`;
+      newGame.switchPlayer();
+    } else {
+      console.log(`TRY AGAIN`)
+    }
+  };
+
   newGame.checkWinConditions();
+  // should updateGameDisplay go in here?
+};
+
+function clearGrid() {
+  for (var i = 0; i < gridSpaces.length; i++) {
+    gridSpaces[i].innerText = ``;
+  };
 };
 
 function updateGameDisplay() {
-  gameGrid.innerText()
-  // 
+  // TO DO: FINISH THIS FUNCTION. Possible displays:
+  // It's X's turn -> on startNewGame or switchPlayer
+  // X won! -> on updateForAWin
+  // It's a draw! -> when checkWinConditions returns 'draw'
+
+  gameGrid.innerText = ``
 };
 
 function updatePlayerDisplay() {
-  // when a player wins a game, use this.currentTurn
-  // match to correct playerXDisplay and update
-  // their display innerText to new this.players.wins count
-  if (newGame.currentTurn.id === 1) {
-    player1Display.innerText = ``;
-    
-  };
+  player1Display.innerText = `${newGame.players[0].wins} wins`;
+  player2Display.innerText = `${newGame.players[1].wins} wins`;
 };
+
 
 // ~~* CONSOLE TEST CASES BELOW FOR NOW *~~
 
 // console.log(JSON.parse(JSON.stringify(newGame)));
 
-newGame.takeTurn(4);
-newGame.checkWinConditions();
+// newGame.takeTurn(4);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(2);
-newGame.checkWinConditions();
+// newGame.takeTurn(2);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(8);
-newGame.checkWinConditions();
+// newGame.takeTurn(8);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(5);
-newGame.checkWinConditions();
+// newGame.takeTurn(5);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(1);
-newGame.checkWinConditions();
+// newGame.takeTurn(1);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(7);
-newGame.checkWinConditions();
+// newGame.takeTurn(7);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(6);
-newGame.checkWinConditions();
+// newGame.takeTurn(6);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(0);
-newGame.checkWinConditions();
+// newGame.takeTurn(0);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(3);
-newGame.checkWinConditions();
+// newGame.takeTurn(3);
+// newGame.checkWinConditions();
 
 // ^^^ ENDS IN A DRAW
 
-newGame.takeTurn(0);
-newGame.checkWinConditions();
+// newGame.takeTurn(0);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(6);
-newGame.checkWinConditions();
+// newGame.takeTurn(6);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(1);
-newGame.checkWinConditions();
+// newGame.takeTurn(1);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(5);
-newGame.checkWinConditions();
+// newGame.takeTurn(5);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(2);
-newGame.checkWinConditions();
+// newGame.takeTurn(2);
+// newGame.checkWinConditions();
 
 // ^^^ STARTING PLAYER WINS
 
-newGame.takeTurn(5);
-newGame.checkWinConditions();
+// newGame.takeTurn(5);
+// newGame.checkWinConditions();
 
-newGame.takeTurn(2);
-newGame.checkWinConditions();
+// newGame.takeTurn(2);
+// newGame.checkWinConditions();
