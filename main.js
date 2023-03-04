@@ -1,7 +1,7 @@
 var gameGrid = document.querySelector('#game-container');
-var gameDisplay = document.querySelector('h1')
-var player1Display = document.querySelector('#player1');
-var player2Display = document.querySelector('#player2');
+var gameBanner = document.querySelector('h1')
+var player1Banner = document.querySelector('#player1');
+var player2Banner = document.querySelector('#player2');
 var gridSpaces = document.querySelectorAll('.game-spaces');
 
 var newGame = new Game();
@@ -10,49 +10,77 @@ newGame.startNewGame();
 
 gameGrid.addEventListener('click', function() {
   event.preventDefault();
-  findIndex();
+  var index = findIndex();
+  updateGame(index);
 });
 
+// findIndex: update var indexChosen w/ clicked grid index position (no validation yet). Return indexChosen.
+// checkDataModel: validates indexChosen in data model. If space is available, splices & returns true. Else false.
+// updateGame: If checkDataModel===true, updates the gridSpace innerText
+    // If gradSpace is updated:
+    // call updateOutcome & checkWinConditions & switchPlayer
+// When are updateOutcome, updatePlayerDisplay, and clearGridDOM called?
+    // updatePlayerDisplay => when checkWinConditions finds a win (or really any time)
+    // updateOutcome => after every turn; innerText update depends on if conditions
+    // clearGridDOM => after a win, when starting new game; needs the 4 sec timeout
+
 function findIndex() {
-  console.log(gridSpaces)
-
   for (var i = 0; i < gridSpaces.length; i++) {
-    if (gridSpaces[i].id === event.target.id && !gridSpaces[i].innerText) {
-      // ^^ Add check here for if data model grid space is null??
-      // TO FIX: After choosing occupied space, it inserts the bad icon & switches players
-      // but this.gridSpaces data model isn't impacted (which is correct)
-      console.log(`DOM: Grid space clicked: ${gridSpaces[i].id}`)
-      console.log(gridSpaces[i].id.charAt(5))
-      newGame.takeTurn(gridSpaces[i].id.charAt(5))
-
-      gridSpaces[i].innerText = `${newGame.currentTurn.token}`;
-      newGame.switchPlayer();
-      return;
-    }
+    if (gridSpaces[i].id === event.target.id) {
+      var index = gridSpaces[i].id.charAt(5);
+      console.log(`DOM: Grid space clicked: ${index}`)
+      return index;
+    };
   };
-  // console.log(`TRY AGAIN`)
-  newGame.checkWinConditions();
-  // should updateGameDisplay go in here?
 };
 
-function clearGrid() {
+function updateGame(indexChosen) {
+  if (newGame.checkDataModel(indexChosen)) {
+    gridSpaces[indexChosen].innerText = `${newGame.currentTurn.token}`;
+    updateOutcome();
+  };
+};
+
+function clearGridDOM() {
   for (var i = 0; i < gridSpaces.length; i++) {
     gridSpaces[i].innerText = ``;
   };
 };
 
-function updateGameDisplay() {
-  // TO DO: FINISH THIS FUNCTION. Possible displays:
-  // It's X's turn -> on startNewGame or switchPlayer
-  // X won! -> on updateForAWin
-  // It's a draw! -> when checkWinConditions returns 'draw'
+function updateOutcome() {
+  // ISSUE: need gameBanner (DOM) updated when startNewGame (data model) is called
+  // in sync with the timeout
+  var gameOutcome = newGame.checkWinConditions();
 
-  gameGrid.innerText = ``
+  if (gameOutcome === 'win') {
+    gameBanner.innerText = `${newGame.currentTurn.token} won!`;
+    updatePlayerDisplay();
+    newGame.switchPlayer();
+    newGame.refreshForNewGame();
+  } else if (gameOutcome === 'draw') {
+    gameBanner.innerText = `It's a draw!`;
+    newGame.switchPlayer();
+    newGame.refreshForNewGame();
+  } else {
+    // console.log(JSON.parse(JSON.stringify(newGame)));
+    // console.log(`SWITCHED TURNS`)
+    newGame.switchPlayer();
+    gameBanner.innerText = `It's ${newGame.currentTurn.token}'s turn`;
+  };
 };
 
 function updatePlayerDisplay() {
-  player1Display.innerText = `${newGame.players[0].wins} wins`;
-  player2Display.innerText = `${newGame.players[1].wins} wins`;
+  if (newGame.players[0].wins === 1) {
+    player1Banner.innerText = `${newGame.players[0].wins} win`
+  } else {
+    player1Banner.innerText = `${newGame.players[0].wins} wins`;
+  };
+
+  if (newGame.players[1].wins === 1) {
+    player2Banner.innerText = `${newGame.players[1].wins} win`
+  } else {
+    player2Banner.innerText = `${newGame.players[1].wins} wins`;
+  };
 };
 
 
