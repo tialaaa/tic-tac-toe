@@ -32,9 +32,9 @@ class Game {
   takeTurn(gridSpaceChosen) {
     if (!this.gridSpaces[gridSpaceChosen]) {
       this.gridSpaces.splice(gridSpaceChosen, 1, this.currentTurn.id);
-      console.log(`Space ${gridSpaceChosen} taken by player ${this.currentTurn.id}`)
+      console.log(`Data Model: Space ${gridSpaceChosen} taken by player ${this.currentTurn.id}`)
     } else {
-      console.log(`CHOOSE ANOTHER SPACE`)
+      console.log(`Data Model: CHOOSE ANOTHER SPACE`)
     }
 
     console.log(JSON.parse(JSON.stringify(this)));
@@ -60,7 +60,7 @@ class Game {
 
   checkWinConditions() {
     console.log(`Checking...`)
-    
+
     if (this.gridSpaces[0] && this.gridSpaces[0] === this.gridSpaces[1] && this.gridSpaces[0] === this.gridSpaces[2]) {
       console.log(`WINNER if 1:`)
       this.players[this.gridSpaces[0]-1].increaseWins();
