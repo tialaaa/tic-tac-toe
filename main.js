@@ -1,7 +1,7 @@
-var gameGrid = document.querySelector('#game-container');
-var gameBanner = document.querySelector('#game-banner')
+var gameGrid = document.querySelector('#gameContainer');
+var gameBanner = document.querySelector('#gameBanner')
 var playerBanners = document.querySelectorAll('.player-banners');
-var gridSpaces = document.querySelectorAll('.game-spaces');
+var gridSpaces = document.querySelectorAll('.spaces');
 
 var newGame = new Game();
 
@@ -29,6 +29,7 @@ function findIndex() {
 function executeTurn(indexChosen) {
   if (newGame.chooseGridSpace(indexChosen)) {
     gridSpaces[indexChosen].innerText = `${newGame.currentTurn.token}`;
+    disableCursor(gridSpaces[indexChosen]);
     revealTurnOutcome();
   };
 };
@@ -65,13 +66,26 @@ function updatePlayerBanners() {
 function clearGameGrid() {
   for (var i = 0; i < gridSpaces.length; i++) {
     gridSpaces[i].innerText = ``;
+    enableCursor(gridSpaces[i]);
   };
 
   updateGameBanner();
 };
 
+function enableCursor(someElement) {
+  someElement.classList.remove('disabled');
+};
+
+function disableCursor(someElement) {
+  someElement.classList.add('disabled');
+};
+
 function restartGame() {
   newGame.isActive = false;
+
+  for (var i = 0; i < gridSpaces.length; i++) {
+    disableCursor(gridSpaces[i])
+  };
 
   setTimeout(clearGameGrid, 4000);
   setTimeout(() => { newGame.refreshDataModel() }, 4000);
