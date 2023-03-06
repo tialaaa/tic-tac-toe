@@ -6,7 +6,6 @@ class Player {
   };
 
   increaseWins() {
-    // if game outcome assigns this player as winner
     this.wins += 1;
   };
 };
