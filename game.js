@@ -28,7 +28,7 @@ class Game {
     console.log(JSON.parse(JSON.stringify(this)));
   };
 
-  executeTurn(indexChosen) {
+  chooseGridSpace(indexChosen) {
     if (!this.gridSpaces[indexChosen]) {
       this.gridSpaces.splice(indexChosen, 1, this.currentTurn.id);
       // console.log(`Data Model: Space ${indexChosen} taken by player ${this.currentTurn.id}`)
@@ -37,7 +37,6 @@ class Game {
       // console.log(`Data Model: CHOOSE ANOTHER SPACE`)
       return false;
     };
-
     // console.log(JSON.parse(JSON.stringify(this)));
   };
 
@@ -52,54 +51,46 @@ class Game {
   };
 
   checkWinConditions() {
+    var winnerToken;
+
     if (this.gridSpaces[0] && this.gridSpaces[0] === this.gridSpaces[1] && this.gridSpaces[0] === this.gridSpaces[2]) {
       // console.log(`WINNER if 1:`)
       this.players[this.gridSpaces[0]-1].increaseWins();
-      // this.winner = this.currentTurn;
-      // console.log(this.players[this.gridSpaces[0]-1])
-      // console.log(JSON.parse(JSON.stringify(this)));
-      return 'win';
+      winnerToken = this.players[this.gridSpaces[0]-1].token;
     } else if (this.gridSpaces[0] && this.gridSpaces[0] === this.gridSpaces[3] && this.gridSpaces[0] === this.gridSpaces[6]) {
       // console.log(`WINNER if 2:`)
       this.players[this.gridSpaces[0]-1].increaseWins();
-      // console.log(this.players[this.gridSpaces[0]-1])
-      return 'win';
+      winnerToken = this.players[this.gridSpaces[0]-1].token;
     } else if (this.gridSpaces[0] && this.gridSpaces[0] === this.gridSpaces[4] && this.gridSpaces[0] === this.gridSpaces[8]) {
       // console.log(`WINNER if 3:`)
       this.players[this.gridSpaces[0]-1].increaseWins();
-      // console.log(this.players[this.gridSpaces[0]-1])
-      return 'win';
+      winnerToken = this.players[this.gridSpaces[0]-1].token;
     } else if (this.gridSpaces[1] && this.gridSpaces[1] === this.gridSpaces[4] && this.gridSpaces[1] === this.gridSpaces[7]) {
       // console.log(`WINNER if 4:`)
       this.players[this.gridSpaces[1]-1].increaseWins();
-      // console.log(this.players[this.gridSpaces[1]-1])
-      return 'win';
+      winnerToken = this.players[this.gridSpaces[1]-1].token;
     } else if (this.gridSpaces[2] && this.gridSpaces[2] === this.gridSpaces[5] && this.gridSpaces[2] === this.gridSpaces[8]) {
       // console.log(`WINNER if 5:`)
       this.players[this.gridSpaces[2]-1].increaseWins();
-      // console.log(this.players[this.gridSpaces[2]-1])
-      return 'win';
+      winnerToken = this.players[this.gridSpaces[2]-1].token;
     } else if (this.gridSpaces[2] && this.gridSpaces[2] === this.gridSpaces[4] && this.gridSpaces[2] === this.gridSpaces[6]) {
       // console.log(`WINNER if 6:`)
       this.players[this.gridSpaces[2]-1].increaseWins();
-      // console.log(this.players[this.gridSpaces[2]-1])
-      return 'win';
+      winnerToken = this.players[this.gridSpaces[2]-1].token;
     } else if (this.gridSpaces[3] && this.gridSpaces[3] === this.gridSpaces[4] && this.gridSpaces[3] === this.gridSpaces[5]) {
       // console.log(`WINNER if 7:`)
       this.players[this.gridSpaces[3]-1].increaseWins();
-      // console.log(this.players[this.gridSpaces[3]-1])
-      return 'win';
+      winnerToken = this.players[this.gridSpaces[3]-1].token;
     } else if (this.gridSpaces[6] && this.gridSpaces[6] === this.gridSpaces[7] && this.gridSpaces[6] === this.gridSpaces[8]) {
       // console.log(`WINNER if 8:`)
       this.players[this.gridSpaces[6]-1].increaseWins();
-      // console.log(this.players[this.gridSpaces[6]-1])
-      return 'win';
+      winnerToken = this.players[this.gridSpaces[6]-1].token;
     } else if (this.gridSpaces[0] && this.gridSpaces[1] && this.gridSpaces[2] && this.gridSpaces[3] && this.gridSpaces[4] && this.gridSpaces[5] && this.gridSpaces[6] && this.gridSpaces[7] && this.gridSpaces[8]) {
       // console.log(`DRAW! all spaces filled`)
-      return 'draw';
-    } else {
-      // console.log(`not a win & spaces still empty, game continues`)
-      return;
+      winnerToken = 'draw';
     };
+
+    this.switchPlayer();
+    return winnerToken;
   };
 };

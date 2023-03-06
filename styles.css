@@ -2,7 +2,8 @@
 
 * {
   font-family: 'Open Sans', sans-serif;
-  border: 1px solid green;
+  /* border: 1px solid green; */
+  /* remove borders before final merge */
   height: 100%;
 }
 
@@ -70,13 +71,18 @@ h1 {
   aspect-ratio: 1/1;
 }
 
-.game-container > div {
+.grid {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   place-self: center;
+  width: 100%;
   background-color: white;
   font-size: 60px;
   text-align: center;
+  cursor: pointer;
+}
+
+.disabled {
+  cursor: not-allowed;
 }
