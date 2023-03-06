@@ -6,13 +6,13 @@ var gridSpaces = document.querySelectorAll('.game-spaces');
 var newGame = new Game();
 
 newGame.refreshDataModel();
-clearGrid();
+clearGameGrid();
 
 gameGrid.addEventListener('click', function() {
   event.preventDefault();
   if (newGame.isActive === true) {
     var index = findIndex();
-    updateGameAfterTurn(index);
+    executeTurn(index);
   };
 });
 
@@ -26,28 +26,25 @@ function findIndex() {
   };
 };
 
-function updateGameAfterTurn(indexChosen) {
-  if (newGame.executeTurn(indexChosen)) {
+function executeTurn(indexChosen) {
+  if (newGame.chooseGridSpace(indexChosen)) {
     gridSpaces[indexChosen].innerText = `${newGame.currentTurn.token}`;
-    updateTurnOutcome();
+    revealTurnOutcome();
   };
 };
 
-function updateTurnOutcome() {
+function revealTurnOutcome() {
   var gameOutcome = newGame.checkWinConditions();
 
-  if (gameOutcome === 'win') {
-    gameBanner.innerText = `${newGame.currentTurn.token} won!`;
-    updatePlayerBanners();
-    newGame.switchPlayer();
-    restartGame();
+  if (!gameOutcome) {
+    updateGameBanner();
   } else if (gameOutcome === 'draw') {
     gameBanner.innerText = `It's a draw!`;
-    newGame.switchPlayer();
     restartGame();
   } else {
-    newGame.switchPlayer();
-    updateGameBanner();
+    gameBanner.innerText = `${gameOutcome} won!`;
+    updatePlayerBanners();
+    restartGame();
   };
 };
 
@@ -65,7 +62,7 @@ function updatePlayerBanners() {
   }
 };
 
-function clearGrid() {
+function clearGameGrid() {
   for (var i = 0; i < gridSpaces.length; i++) {
     gridSpaces[i].innerText = ``;
   };
@@ -76,6 +73,6 @@ function clearGrid() {
 function restartGame() {
   newGame.isActive = false;
 
-  setTimeout(clearGrid, 4000);
+  setTimeout(clearGameGrid, 4000);
   setTimeout(() => { newGame.refreshDataModel() }, 4000);
 };
