@@ -11,13 +11,15 @@ newGame.refreshDataModel();
 clearGameGrid();
 
 window.addEventListener('load', function() {
-  retrievePlayerScores();
+  newGame.retrieveFromLocalStorage();
+  updatePlayerBanners();
 });
 
 clearButton.addEventListener('click', function() {
   window.localStorage.clear();
-  retrievePlayerScores();
+  newGame.retrieveFromLocalStorage();
   updatePlayerBanners();
+
   console.log(`Clear clicked`);
 });
 
@@ -28,58 +30,6 @@ gameGrid.addEventListener('click', function() {
     executeTurn(index);
   };
 });
-
-function storePlayerScores() {
-  var localStorageScores = [];
-
-  for (var i = 0; i < newGame.players.length; i++) {
-    localStorageScores.push(newGame.players[i].wins);
-  };
-  window.localStorage.setItem('playerScores', JSON.stringify(localStorageScores));
-  console.log(`Stored locally as array:`);
-  console.log(localStorageScores)
-
-  // window.localStorage.setItem('player1Score', JSON.stringify(newGame.players[0].wins));
-  // window.localStorage.setItem('player2Score', JSON.stringify(newGame.players[1].wins));
-};
-
-function retrievePlayerScores() {
-  var localStorageScores = JSON.parse(window.localStorage.getItem('playerScores'));
-  console.log(`Retrieved locally:`)
-  console.log(localStorageScores)
-  console.log(`NewGame before updating players.win:`)
-  console.log(JSON.parse(JSON.stringify(newGame)));
-
-  for (var i = 0; i < localStorageScores.length; i++) {
-    if (localStorageScores[i] === null) {
-      newGame.players[i].wins = 0;
-    } else {
-      newGame.players[i].wins = localStorageScores[i];
-    }
-  };
-
-  // var player1Score = JSON.parse(window.localStorage.getItem('player1Score'));
-  // var player2Score = JSON.parse(window.localStorage.getItem('player2Score'));
-  // console.log(`Local storage: ${player1Score}, ${player2Score}`)
-  // console.log(`NewGame before updating players.win:`)
-  // console.log(JSON.parse(JSON.stringify(newGame)));
-
-  // if (player1Score === null) {
-  //   newGame.players[0].wins = 0;
-  // } else {
-  //   newGame.players[0].wins = player1Score;
-  // }
-
-  // if (player2Score === null) {
-  //   newGame.players[1].wins = 0;
-  // } else {
-  //   newGame.players[1].wins = player2Score;
-  // }
-
-  console.log(`NewGame after updating players.win:`)
-  console.log(newGame)
-  updatePlayerBanners();
-};
 
 function findIndex() {
   for (var i = 0; i < gridSpaces.length; i++) {
@@ -111,7 +61,7 @@ function revealTurnOutcome() {
     gameBanner.innerText = `${gameOutcome} won!`;
     updatePlayerBanners();
     playAnimation(gameOutcome);
-    storePlayerScores();
+    newGame.addToLocalStorage();
     restartGame();
   };
 };
@@ -122,7 +72,7 @@ function playAnimation(winner) {
       show(animations[i]);
     };
   };
-}
+};
 
 function updateGameBanner() {
   gameBanner.innerText = `It's ${newGame.currentTurn.token}'s turn`;
