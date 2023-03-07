@@ -1,13 +1,27 @@
 var gameGrid = document.querySelector('#gameContainer');
-var gridSpaces = document.querySelectorAll('.spaces');
 var gameBanner = document.querySelector('#gameBanner')
+var gridSpaces = document.querySelectorAll('.spaces');
 var playerBanners = document.querySelectorAll('.player-banners');
 var animations = document.querySelectorAll('.animation');
+var clearButton = document.querySelector('#clear')
 
 var newGame = new Game();
 
 newGame.refreshDataModel();
 clearGameGrid();
+
+window.addEventListener('load', function() {
+  newGame.retrieveFromLocalStorage();
+  updatePlayerBanners();
+});
+
+clearButton.addEventListener('click', function() {
+  window.localStorage.clear();
+  newGame.retrieveFromLocalStorage();
+  updatePlayerBanners();
+
+  console.log(`Clear clicked`);
+});
 
 gameGrid.addEventListener('click', function() {
   event.preventDefault();
@@ -21,7 +35,6 @@ function findIndex() {
   for (var i = 0; i < gridSpaces.length; i++) {
     if (gridSpaces[i].id === event.target.id) {
       var index = gridSpaces[i].id.charAt(5);
-      // console.log(`DOM: Grid space clicked: ${index}`)
       return index;
     };
   };
@@ -29,6 +42,7 @@ function findIndex() {
 
 function executeTurn(indexChosen) {
   if (newGame.chooseGridSpace(indexChosen)) {
+    console.log(newGame)
     gridSpaces[indexChosen].innerText = `${newGame.currentTurn.token}`;
     disableCursor(gridSpaces[indexChosen]);
     revealTurnOutcome();
@@ -47,6 +61,7 @@ function revealTurnOutcome() {
     gameBanner.innerText = `${gameOutcome} won!`;
     updatePlayerBanners();
     playAnimation(gameOutcome);
+    newGame.addToLocalStorage();
     restartGame();
   };
 };
@@ -57,7 +72,7 @@ function playAnimation(winner) {
       show(animations[i]);
     };
   };
-}
+};
 
 function updateGameBanner() {
   gameBanner.innerText = `It's ${newGame.currentTurn.token}'s turn`;
