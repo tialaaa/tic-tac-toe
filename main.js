@@ -1,7 +1,8 @@
 var gameGrid = document.querySelector('#gameContainer');
+var gridSpaces = document.querySelectorAll('.spaces');
 var gameBanner = document.querySelector('#gameBanner')
 var playerBanners = document.querySelectorAll('.player-banners');
-var gridSpaces = document.querySelectorAll('.spaces');
+var animations = document.querySelectorAll('.animation');
 
 var newGame = new Game();
 
@@ -45,9 +46,18 @@ function revealTurnOutcome() {
   } else {
     gameBanner.innerText = `${gameOutcome} won!`;
     updatePlayerBanners();
+    playAnimation(gameOutcome);
     restartGame();
   };
 };
+
+function playAnimation(winner) {
+  for (var i = 0; i < animations.length; i++) {
+    if (animations[i].id === winner) {
+      show(animations[i]);
+    };
+  };
+}
 
 function updateGameBanner() {
   gameBanner.innerText = `It's ${newGame.currentTurn.token}'s turn`;
@@ -69,15 +79,11 @@ function clearGameGrid() {
     enableCursor(gridSpaces[i]);
   };
 
+  for (var i = 0; i < animations.length; i++) {
+    hide(animations[i]);
+  };
+
   updateGameBanner();
-};
-
-function enableCursor(someElement) {
-  someElement.classList.remove('disabled');
-};
-
-function disableCursor(someElement) {
-  someElement.classList.add('disabled');
 };
 
 function restartGame() {
@@ -89,4 +95,20 @@ function restartGame() {
 
   setTimeout(clearGameGrid, 4000);
   setTimeout(() => { newGame.refreshDataModel() }, 4000);
+};
+
+function enableCursor(someElement) {
+  someElement.classList.remove('disabled');
+};
+
+function disableCursor(someElement) {
+  someElement.classList.add('disabled');
+};
+
+function show(animation) {
+  animation.classList.remove('hidden')
+};
+
+function hide(animation) {
+  animation.classList.add('hidden')
 };

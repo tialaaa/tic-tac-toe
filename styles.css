@@ -86,3 +86,97 @@ h1 {
 .disabled {
   cursor: not-allowed;
 }
+
+/* WIN ANIMATIONS */
+
+.animation-container {
+  height: 0.1%;
+}
+
+.snowflake,
+.flame {
+  font-size: 5em;
+  height: auto;
+  position: absolute;
+  top: -10%;
+  z-index: 9999;
+  animation-name: animation-fall, animation-shake;
+  animation-duration: 3s, 2s;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-fill-mode: forwards, forwards;
+}
+
+@keyframes animation-fall {
+  0% {top: -10%; opacity: 1}
+  70% {opacity: .75;}
+  100% {top: 100%; opacity: 0}
+}
+
+@keyframes animation-shake {
+  0% {transform: translateX(0px)}
+  50% {transform: translateX(80px)}
+  100% {transform: translateX(0px)}
+}
+
+.snowflake:nth-of-type(0),
+.flame:nth-of-type(0) {
+  left: 25%; animation-delay: 0.25s, 0s;
+}
+
+.snowflake:nth-of-type(1),
+.flame:nth-of-type(1) {
+  left: 10%; animation-delay: 0s, 0.75s;
+}
+
+.snowflake:nth-of-type(2),
+.flame:nth-of-type(2) {
+  left: 20%; animation-delay: 0.5s, 0.5s;
+}
+
+.snowflake:nth-of-type(3),
+.flame:nth-of-type(3) {
+  left: 30%; animation-delay: 0.75s, 0.25s;
+}
+
+.snowflake:nth-of-type(4),
+.flame:nth-of-type(4) {
+  left: 75%; animation-delay: 0s, 0.25s;
+}
+
+.snowflake:nth-of-type(5),
+.flame:nth-of-type(5) {
+  left: 45%; animation-delay: 0.25s, 0.1s;
+}
+
+.snowflake:nth-of-type(6),
+.flame:nth-of-type(6) {
+  left: 60%; animation-delay: 0.3s, 0s;
+}
+
+.snowflake:nth-of-type(7),
+.flame:nth-of-type(7) {
+  left: 40%; animation-delay: 0.5s, 0.2s;
+}
+
+.snowflake:nth-of-type(9),
+.flame:nth-of-type(8) {
+  left: 80%; animation-delay: 0.25s, 0.3s;
+}
+
+.snowflake:nth-of-type(8),
+.flame:nth-of-type(10) {
+  left: 55%; animation-delay: 1s, 0.5s;
+}
+
+.snowflake:nth-of-type(10) {
+  left: 20%; animation-delay: .85s, 0.1s;
+}
+
+.flame:nth-of-type(9) {
+  left: 15%; animation-delay: 1s, 0s;
+}
+
+.hidden {
+  display: none;
+}
