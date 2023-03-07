@@ -2,8 +2,6 @@
 
 * {
   font-family: 'Open Sans', sans-serif;
-  /* border: 1px solid green; */
-  /* remove borders before final merge */
   height: 100%;
 }
 
@@ -11,11 +9,12 @@ body {
   display: flex;
   justify-content: space-between;
   margin: 0;
+  background: linear-gradient(90deg, rgba(255,136,101,0.75) 0%, rgba(255,255,255,1) 25%, rgba(255,255,255,1) 75%, rgba(183,241,255,0.75) 100%);
 }
 
 /* PLAYER SIDEBARS */
 
-.outside-column {
+.outside-columns {
   display: flex;
   flex-direction: column;
   width: 25%;
@@ -32,14 +31,6 @@ body {
 h2 {
   display: flex;
   justify-content: center;
-}
-
-.fire {
-  background-color: #FFDBD0;
-}
-
-.ice {
-  background-color: #ECF8FB;
 }
 
 /* GAME COLUMN */
@@ -95,11 +86,11 @@ h1 {
 
 .snowflake,
 .flame {
-  font-size: 5em;
-  height: auto;
   position: absolute;
+  height: auto;
   top: -20%;
   z-index: 9999;
+  font-size: 5em;
   animation-name: animation-fall, animation-shake;
   animation-duration: 3s, 2s;
   animation-timing-function: linear, ease-in-out;
@@ -109,7 +100,7 @@ h1 {
 
 @keyframes animation-fall {
   0% {top: -10%; opacity: 1}
-  70% {opacity: .75;}
+  70% {opacity: 0.75;}
   100% {top: 100%; opacity: 0}
 }
 
