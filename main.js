@@ -20,7 +20,6 @@ function findIndex() {
   for (var i = 0; i < gridSpaces.length; i++) {
     if (gridSpaces[i].id === event.target.id) {
       var index = gridSpaces[i].id.charAt(5);
-      // console.log(`DOM: Grid space clicked: ${index}`)
       return index;
     };
   };
