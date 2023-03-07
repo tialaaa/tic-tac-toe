@@ -1,13 +1,33 @@
 var gameGrid = document.querySelector('#gameContainer');
-var gridSpaces = document.querySelectorAll('.spaces');
 var gameBanner = document.querySelector('#gameBanner')
+var gridSpaces = document.querySelectorAll('.spaces');
 var playerBanners = document.querySelectorAll('.player-banners');
 var animations = document.querySelectorAll('.animation');
+var clearButton = document.querySelector('#clear')
+
+// after a win, use window.localStorage.setItem(key, value) to store the current players' scores
+  // alternative:  window.localStorage.setItem('user', JSON.stringify(person));
+
+// event listener for page load, calls getItem to retrieve players' scores
+// then parses to turn back into numbers?
+// then overwrites this.players[i].wins with those numbers
+// and call updatePlayerBanners
+
+// add a "clear history" button
+// using button, add Event listener for 'click' => will force clear player history
+// window.localStorage.clear();
 
 var newGame = new Game();
 
 newGame.refreshDataModel();
 clearGameGrid();
+
+window.addEventListener('load', function() {
+  // window.localStorage.clear()
+  retrievePlayerScores();
+});
+
+// clearButton.addEventListener('click', window.localStorage.clear())
 
 gameGrid.addEventListener('click', function() {
   event.preventDefault();
@@ -16,6 +36,51 @@ gameGrid.addEventListener('click', function() {
     executeTurn(index);
   };
 });
+
+function storePlayerScores() {
+  // var localStorageScores = [];
+
+  // for (var i = 0; i < newGame.players.length; i++) {
+  //   if (newGame.players[i].wins === 0) {
+  //     localStorageScores.push(0);
+  //   } else {
+  //     localStorageScores.push(newGame.players[i].wins);
+  //   };
+  // };
+  // window.localStorage.setItem('playerScores', JSON.stringify(localStorageScores));
+  // console.log(localStorageScores)
+
+  window.localStorage.setItem('player1Score', newGame.players[0].wins);
+  window.localStorage.setItem('player2Score', newGame.players[1].wins);
+}
+
+function retrievePlayerScores() {
+  var player1Score = window.localStorage.getItem('player1Score');
+  var player2Score = window.localStorage.getItem('player2Score');
+  
+  // why is this still showing null for score 0?
+  if (player1Score === 0) {
+    newGame.players[0].wins = 0;
+  } else {
+    newGame.players[0].wins = player1Score;
+  }
+
+  if (player2Score === 0) {
+    newGame.players[1].wins = 0;
+  } else {
+    newGame.players[1].wins = player2Score;
+  }
+
+  console.log(newGame.players)
+
+  // var localStorageScores = JSON.parse(window.localStorage.getItem('playerScores'));
+  // console.log(localStorageScores)
+  // console.log(newGame.players)
+
+  // for (var i = 0; i < localStorageScores.length; i++) {
+  //   newGame.players[i].wins = localStorageScores[i];
+  // };
+}
 
 function findIndex() {
   for (var i = 0; i < gridSpaces.length; i++) {
@@ -46,6 +111,7 @@ function revealTurnOutcome() {
     gameBanner.innerText = `${gameOutcome} won!`;
     updatePlayerBanners();
     playAnimation(gameOutcome);
+    storePlayerScores();
     restartGame();
   };
 };
