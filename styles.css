@@ -87,7 +87,7 @@ h1 {
   cursor: not-allowed;
 }
 
-/* WIN ANIMATION */
+/* WIN ANIMATIONS */
 
 .animation-container {
   height: 0.1%;
@@ -170,7 +170,7 @@ h1 {
 }
 
 .snowflake:nth-of-type(10) {
-  left: 20%; animation-delay: 0.1s, 0.5s;
+  left: 20%; animation-delay: .85s, 0.1s;
 }
 
 .flame:nth-of-type(9) {
