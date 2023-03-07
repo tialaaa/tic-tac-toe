@@ -9,7 +9,7 @@ var clearButton = document.querySelector('#clear')
   // alternative:  window.localStorage.setItem('user', JSON.stringify(person));
 
 // event listener for page load, calls getItem to retrieve players' scores
-// then parses to turn back into numbers?
+// then parses to turn back into numbers ?
 // then overwrites this.players[i].wins with those numbers
 // and call updatePlayerBanners
 
@@ -27,7 +27,12 @@ window.addEventListener('load', function() {
   retrievePlayerScores();
 });
 
-// clearButton.addEventListener('click', window.localStorage.clear())
+clearButton.addEventListener('click', function() {
+  window.localStorage.clear()
+  retrievePlayerScores();
+  updatePlayerBanners();
+  console.log(`Clear clicked`)
+})
 
 gameGrid.addEventListener('click', function() {
   event.preventDefault();
@@ -50,29 +55,36 @@ function storePlayerScores() {
   // window.localStorage.setItem('playerScores', JSON.stringify(localStorageScores));
   // console.log(localStorageScores)
 
-  window.localStorage.setItem('player1Score', newGame.players[0].wins);
-  window.localStorage.setItem('player2Score', newGame.players[1].wins);
+  // window.localStorage.setItem('player1Score', newGame.players[0].wins);
+  // window.localStorage.setItem('player2Score', newGame.players[1].wins);
+  window.localStorage.setItem('player1Score', JSON.stringify(newGame.players[0].wins));
+  window.localStorage.setItem('player2Score', JSON.stringify(newGame.players[1].wins));
 }
 
 function retrievePlayerScores() {
-  var player1Score = window.localStorage.getItem('player1Score');
-  var player2Score = window.localStorage.getItem('player2Score');
-  
-  // why is this still showing null for score 0?
-  if (player1Score === 0) {
+  var player1Score = JSON.parse(window.localStorage.getItem('player1Score'));
+  var player2Score = JSON.parse(window.localStorage.getItem('player2Score'));
+  console.log(`Local storage: ${player1Score}, ${player2Score}`)
+  console.log(`NewGame before updating players.win:`)
+  console.log(JSON.parse(JSON.stringify(newGame)));
+
+  // newGame.players[0].wins = player1Score
+  // newGame.players[1].wins = player2Score
+  if (player1Score === null) {
     newGame.players[0].wins = 0;
   } else {
     newGame.players[0].wins = player1Score;
   }
 
-  if (player2Score === 0) {
+  if (player2Score === null) {
     newGame.players[1].wins = 0;
   } else {
     newGame.players[1].wins = player2Score;
   }
 
-  console.log(newGame.players)
-
+  console.log(`NewGame after updating players.win:`)
+  console.log(newGame)
+  updatePlayerBanners();
   // var localStorageScores = JSON.parse(window.localStorage.getItem('playerScores'));
   // console.log(localStorageScores)
   // console.log(newGame.players)
@@ -93,6 +105,7 @@ function findIndex() {
 
 function executeTurn(indexChosen) {
   if (newGame.chooseGridSpace(indexChosen)) {
+    console.log(newGame)
     gridSpaces[indexChosen].innerText = `${newGame.currentTurn.token}`;
     disableCursor(gridSpaces[indexChosen]);
     revealTurnOutcome();
