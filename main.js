@@ -2,8 +2,7 @@ var gameGrid = document.querySelector('#gameContainer');
 var gridSpaces = document.querySelectorAll('.spaces');
 var gameBanner = document.querySelector('#gameBanner')
 var playerBanners = document.querySelectorAll('.player-banners');
-var animationSnow = document.querySelector('#snowflakes');
-var animationFire = document.querySelector('#flames');
+var animations = document.querySelectorAll('.animation');
 
 var newGame = new Game();
 
@@ -44,24 +43,21 @@ function revealTurnOutcome() {
   } else if (gameOutcome === 'draw') {
     gameBanner.innerText = `It's a draw!`;
     restartGame();
-  } else if (gameOutcome === "❄️") {
+  } else {
     gameBanner.innerText = `${gameOutcome} won!`;
-    show(animationSnow)
     updatePlayerBanners();
-    restartGame();
-  } else if (gameOutcome === "🔥") {
-    gameBanner.innerText = `${gameOutcome} won!`;
-    show(animationFire);
-    updatePlayerBanners();
+    playAnimation(gameOutcome);
     restartGame();
   };
-    // } else {
-  //   gameBanner.innerText = `${gameOutcome} won!`;
-  //   animationSnow.classList.remove('hidden')
-  //   updatePlayerBanners();
-  //   restartGame();
-  // };
 };
+
+function playAnimation(winner) {
+  for (var i = 0; i < animations.length; i++) {
+    if (animations[i].id === winner) {
+      show(animations[i]);
+    };
+  };
+}
 
 function updateGameBanner() {
   gameBanner.innerText = `It's ${newGame.currentTurn.token}'s turn`;
@@ -83,9 +79,22 @@ function clearGameGrid() {
     enableCursor(gridSpaces[i]);
   };
 
-  hide(animationFire);
-  hide(animationSnow);
+  for (var i = 0; i < animations.length; i++) {
+    hide(animations[i]);
+  };
+
   updateGameBanner();
+};
+
+function restartGame() {
+  newGame.isActive = false;
+
+  for (var i = 0; i < gridSpaces.length; i++) {
+    disableCursor(gridSpaces[i])
+  };
+
+  setTimeout(clearGameGrid, 4000);
+  setTimeout(() => { newGame.refreshDataModel() }, 4000);
 };
 
 function enableCursor(someElement) {
@@ -102,15 +111,4 @@ function show(animation) {
 
 function hide(animation) {
   animation.classList.add('hidden')
-};
-
-function restartGame() {
-  newGame.isActive = false;
-
-  for (var i = 0; i < gridSpaces.length; i++) {
-    disableCursor(gridSpaces[i])
-  };
-
-  setTimeout(clearGameGrid, 4000);
-  setTimeout(() => { newGame.refreshDataModel() }, 4000);
 };
