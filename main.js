@@ -1,7 +1,9 @@
 var gameGrid = document.querySelector('#gameContainer');
+var gridSpaces = document.querySelectorAll('.spaces');
 var gameBanner = document.querySelector('#gameBanner')
 var playerBanners = document.querySelectorAll('.player-banners');
-var gridSpaces = document.querySelectorAll('.spaces');
+var animationSnow = document.querySelector('#snowflakes');
+var animationFire = document.querySelector('#flames');
 
 var newGame = new Game();
 
@@ -42,11 +44,23 @@ function revealTurnOutcome() {
   } else if (gameOutcome === 'draw') {
     gameBanner.innerText = `It's a draw!`;
     restartGame();
-  } else {
+  } else if (gameOutcome === "❄️") {
     gameBanner.innerText = `${gameOutcome} won!`;
+    show(animationSnow)
+    updatePlayerBanners();
+    restartGame();
+  } else if (gameOutcome === "🔥") {
+    gameBanner.innerText = `${gameOutcome} won!`;
+    show(animationFire);
     updatePlayerBanners();
     restartGame();
   };
+    // } else {
+  //   gameBanner.innerText = `${gameOutcome} won!`;
+  //   animationSnow.classList.remove('hidden')
+  //   updatePlayerBanners();
+  //   restartGame();
+  // };
 };
 
 function updateGameBanner() {
@@ -69,6 +83,8 @@ function clearGameGrid() {
     enableCursor(gridSpaces[i]);
   };
 
+  hide(animationFire);
+  hide(animationSnow);
   updateGameBanner();
 };
 
@@ -78,6 +94,14 @@ function enableCursor(someElement) {
 
 function disableCursor(someElement) {
   someElement.classList.add('disabled');
+};
+
+function show(animation) {
+  animation.classList.remove('hidden')
+};
+
+function hide(animation) {
+  animation.classList.add('hidden')
 };
 
 function restartGame() {
