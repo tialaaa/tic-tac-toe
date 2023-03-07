@@ -3,7 +3,7 @@ var gameBanner = document.querySelector('#gameBanner')
 var gridSpaces = document.querySelectorAll('.spaces');
 var playerBanners = document.querySelectorAll('.player-banners');
 var animations = document.querySelectorAll('.animation');
-var clearButton = document.querySelector('#clear')
+var clearButton = document.querySelector('#clear');
 
 var newGame = new Game();
 
@@ -19,8 +19,6 @@ clearButton.addEventListener('click', function() {
   window.localStorage.clear();
   newGame.retrieveFromLocalStorage();
   updatePlayerBanners();
-
-  console.log(`Clear clicked`);
 });
 
 gameGrid.addEventListener('click', function() {
@@ -42,7 +40,6 @@ function findIndex() {
 
 function executeTurn(indexChosen) {
   if (newGame.chooseGridSpace(indexChosen)) {
-    console.log(newGame)
     gridSpaces[indexChosen].innerText = `${newGame.currentTurn.token}`;
     disableCursor(gridSpaces[indexChosen]);
     revealTurnOutcome();
@@ -105,7 +102,7 @@ function restartGame() {
   newGame.isActive = false;
 
   for (var i = 0; i < gridSpaces.length; i++) {
-    disableCursor(gridSpaces[i])
+    disableCursor(gridSpaces[i]);
   };
 
   setTimeout(clearGameGrid, 4000);
@@ -121,9 +118,9 @@ function disableCursor(someElement) {
 };
 
 function show(animation) {
-  animation.classList.remove('hidden')
+  animation.classList.remove('hidden');
 };
 
 function hide(animation) {
-  animation.classList.add('hidden')
+  animation.classList.add('hidden');
 };

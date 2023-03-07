@@ -28,12 +28,10 @@ class Game {
 
   addToLocalStorage() {
     var localStorageScores = [];
-    localStorageScores[0] = this.players[0].wins
-    localStorageScores[1] = this.players[1].wins
-
+    localStorageScores[0] = this.players[0].wins;
+    localStorageScores[1] = this.players[1].wins;
+    
     window.localStorage.setItem('playerScores', JSON.stringify(localStorageScores));
-    console.log(`Stored locally as array:`);
-    console.log(localStorageScores)
   };
 
   retrieveFromLocalStorage() {
@@ -42,18 +40,10 @@ class Game {
     if(!localStorageScores) {
       localStorageScores = [0,0];
     };
-
-    console.log(`Retrieved locally:`)
-    console.log(localStorageScores)
-    console.log(`NewGame before updating players.win:`)
-    console.log(JSON.parse(JSON.stringify(newGame)));
   
     for (var i = 0; i < localStorageScores.length; i++) {
       this.players[i].wins = !localStorageScores[i] ? 0 : localStorageScores[i];
     };
-  
-    console.log(`NewGame after updating players.win:`)
-    console.log(this)
   };
 
   chooseGridSpace(indexChosen) {
